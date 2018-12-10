@@ -9,7 +9,7 @@
             </div>
             <div class="recent-entry col-md-5">
                 <h3>Email</h3>
-                <?php echo do_shortcode('[ninja_form id=1]'); ?>
+                <?php echo do_shortcode('[contact-form-7 id="186" title="Contact"]'); ?>
             </div>
         </div>
     </div>
