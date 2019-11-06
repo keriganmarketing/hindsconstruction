@@ -25,11 +25,13 @@ $classes = explode('|', $class);
             global $post; $i = 0;
             $feed    = new FacebookFeed();
             $results = $feed->fetch(3);
-            foreach( $results->posts as $result ){ ?>
-                <div class="col-4 <?php echo $classes[$i]; $i++; ?>">
-                    <?php include(locate_template('template-parts/partials/mini-article.php')); ?>
-                </div>
-            <?php } ?>
+            if(isset($results->posts) && is_array($results->posts)):
+                foreach( $results->posts as $result ){ ?>
+                    <div class="col-4 <?php echo $classes[$i]; $i++; ?>">
+                        <?php include(locate_template('template-parts/partials/mini-article.php')); ?>
+                    </div>
+                <?php } ?>
+            <?php endif; ?>
             <?php wp_reset_postdata();?>
         </div>
 
