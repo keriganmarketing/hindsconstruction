@@ -1,15 +1,19 @@
 <?php
-use KeriganSolutions\FacebookPhotoGallery\FacebookPhotoGallery;
+use Includes\Modules\KMAFacebook\FacebookController;
 
 // Cursor before the returned data set
 $before  = $_GET['before'] ?? null;
 // Cursor after the returned data set
 $after   = $_GET['after'] ?? null;
 
-$gallery   = new FacebookPhotoGallery();
-$albums    = $gallery->albums(12, $before, $after);
+$albumId = $_GET['albumId'] ?? null;
+
+$gallery = new FacebookController();
+// $albums    = $gallery->getAlbums(12, $before, $after);
 $badAlbums = ['Past builds', 'Profile Pictures', 'Mobile Uploads', 'Cover Photos', 'Timeline Photos', 'Untitled Album'];
 $goodAlbums = [];
+
+if($albums){
 foreach ($albums->data as $album) {
     if ( ! in_array($album->name, $badAlbums)) {
         $goodAlbums[] = $album;
@@ -50,3 +54,4 @@ $disabledNext = isset($albums->paging->next) ? false : true;
             > Next </a></li>
     <?php } ?>
 </ul>
+<?php } ?>

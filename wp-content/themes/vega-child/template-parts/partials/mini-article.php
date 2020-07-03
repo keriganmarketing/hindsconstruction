@@ -1,8 +1,8 @@
 <?php
 
-$dateposted = human_time_diff(time(),strtotime($result->created_time)) . ' ago';
-$content  = wp_trim_words($result->message, 17, '... <a href="#" >read more.</a>');
-$photoUrl = $result->full_picture != null ? $result->full_picture : 'http://hindsconstruction.dev/wp-content/uploads/2018/01/gulfaire-home-2.jpg';
+$dateposted = human_time_diff(time(),strtotime($result->post_date)) . ' ago';
+$content  = wp_trim_words($result->post_date, 17, '... <a href="#" >read more.</a>');
+$photoUrl = $result->full_image_url != null ? $result->full_image_url : 'http://hindsconstruction.dev/wp-content/uploads/2018/01/gulfaire-home-2.jpg';
 
 $vega_wp_blog_feed_meta = vega_wp_get_option('vega_wp_blog_feed_meta');
 if($vega_wp_blog_feed_meta == 'Y') {
@@ -17,10 +17,10 @@ global $key;
 ?>
 <div class="post-grid recent-entry" id="recent-post-<?php the_ID(); ?>">
     <div class="recent-entry-image image">
-        <?php if($result->type != 'video') { ?>
+        <?php if($result->status_type != 'added_video') { ?>
         <div class="embed-responsive embed-responsive-4by3 align-items-center">
-            <a target="_blank" href="<?php echo $result->permalink_url; ?>" target="_blank">
-                <img src="<?php echo $photoUrl; ?>" alt="<?php echo $result->caption; ?>" class="embed-responsive-item" >
+            <a target="_blank" href="<?php echo $result->post_link; ?>" target="_blank">
+                <img src="<?php echo $photoUrl; ?>" alt="<?php echo $content; ?>" class="embed-responsive-item" >
             </a>
         </div>
         <?php } else { ?>
@@ -56,7 +56,7 @@ global $key;
 
     <!-- Post Buttons -->
     <div class="recent-entry-buttons">
-        <a target="_blank" href="<?php echo $result->permalink_url; ?>" class="btn btn-default btn-readmore">Read more</a>
+        <a target="_blank" href="<?php echo $result->post_link; ?>" class="btn btn-default btn-readmore">Read more</a>
     </div>
     <!-- /Post Buttons -->
 

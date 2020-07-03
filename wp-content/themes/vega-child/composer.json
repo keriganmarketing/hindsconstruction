@@ -8,8 +8,8 @@
     },
     "require": {
         "guzzlehttp/guzzle": "^6.3",
-        "kerigansolutions/facebookfeed": "^0.16.0",
-        "kerigansolutions/facebook-photo-gallery": "^0.6.0"
+        "kerigansolutions/fb-autoblog-wp": "^0.24.0",
+        "kevinrob/guzzle-cache-middleware": "^3.3"
     },
     "minimum-stability": "stable"
 }

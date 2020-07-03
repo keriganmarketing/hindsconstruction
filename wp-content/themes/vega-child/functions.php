@@ -4,6 +4,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 use Includes\Modules\Helpers\CleanWP;
 use Includes\Modules\Testimonials\Testimonials;
+use Includes\Modules\KMAFacebook\FacebookController;
 
 require('vendor/autoload.php');
 
@@ -11,6 +12,9 @@ new CleanWP();
 
 $testimonials = new Testimonials();
 $testimonials->createPostType();
+
+$facebook = new FacebookController();
+$facebook->setupAdmin();
 
 add_shortcode('testimonials',function(){
 	$testimonials = new Testimonials();

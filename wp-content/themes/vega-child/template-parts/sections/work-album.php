@@ -1,5 +1,5 @@
 <?php
-use KeriganSolutions\FacebookPhotoGallery\FacebookPhotoGallery;
+use Includes\Modules\KMAFacebook\FacebookController;
 
 // Cursor before the returned data set
 $before  = $_GET['before'] ?? null;
@@ -8,34 +8,38 @@ $after   = $_GET['after'] ?? null;
 
 $albumId = $_GET['albumId'] ?? null;
 
-$gallery = new FacebookPhotoGallery();
-$photos  = $gallery->albumPhotos($albumId, 36, $before, $after);
+$gallery = new FacebookController();
+// $photos  = $gallery->getPhotos($albumId, 36, $before, $after);
 ?>
 <h2><?php echo $_GET['albumName']; ?> <a href="/our-work/" class="btn btn-default btn-sm pagination-link">Back to main gallery</a></h2>
 
 <div class="row photo-gallery grid">
 	<?php
-	$i = 0;
-	foreach ($photos->data as $photo) {
-		$thumbnail = '';
-		if ( ! isset($photo->images[4]->source)) {
-			$thumbnail = $photo->images[0]->source;
-		} else {
-			$thumbnail = $photo->images[4]->source;
+
+	if(isset($photos->data) && is_array($results->posts)){
+		$i = 0;
+		foreach ($photos->data as $photo) {
+			$thumbnail = '';
+			if ( ! isset($photo->images[4]->source)) {
+				$thumbnail = $photo->images[0]->source;
+			} else {
+				$thumbnail = $photo->images[4]->source;
+			}
+			?>
+			<div class="grid-item col-sm-6 col-md-3 mb-3">
+				<figure class="image is-4by3">
+					<a href="<?= $photo->images[0]->source; ?>" data-lightbox="<?php echo $albumId; ?>" data-title="<?= $photo->images[0]->name ?>">
+						<img src="<?= $thumbnail ?>" alt="<?= $photo->images[0]->name ?>" class="img img-responsive">
+					</a>
+				</figure>
+			</div>
+			<?php
+			$modalContent .= '<img src="'.$photo->images[0]->source.'" alt="'.$photo->images[0]->name.'" :index="'.$i.'" >';
+			$i++;
 		}
-		?>
-		<div class="grid-item col-sm-6 col-md-3 mb-3">
-			<figure class="image is-4by3">
-				<a href="<?= $photo->images[0]->source; ?>" data-lightbox="<?php echo $albumId; ?>" data-title="<?= $photo->images[0]->name ?>">
-					<img src="<?= $thumbnail ?>" alt="<?= $photo->images[0]->name ?>" class="img img-responsive">
-				</a>
-			</figure>
-		</div>
-		<?php
-		$modalContent .= '<img src="'.$photo->images[0]->source.'" alt="'.$photo->images[0]->name.'" :index="'.$i.'" >';
-		$i++;
-	}
-	?>
+	} else { ?>
+		<p></p>
+	<?php } ?>
 </div>
 <?php
 $disabledPrevious = isset($photos->paging->previous) ? false: true;
